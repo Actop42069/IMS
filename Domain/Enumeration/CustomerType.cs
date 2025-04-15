@@ -2,7 +2,7 @@
 {
     public enum CustomerType
     {
-        Buyer = 1,
-        Seller = 2
+        Foreigner = 1,
+        Nepali = 2
     }
 }

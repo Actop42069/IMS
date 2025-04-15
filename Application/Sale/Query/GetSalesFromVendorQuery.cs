@@ -40,7 +40,6 @@ namespace Application.Sale.Query
             {
                 var salesData = await _dbContext.Sales
                                                    .AsNoTracking()
-                                                   .Where(a => a.PaymentStatus == PaymentStatus.Completed)
                                                    .Join(
                                                         _dbContext.SaleProduct,
                                                         sale => sale.SalesId,

@@ -14,14 +14,9 @@ namespace Application.Vendors.Command
         public string VendorAddress { get; set; }
         public VendorType VendorType { get; set; }
         public VendorStatus VendorStatus { get; set; }
-        public string VendorContactName { get; set; }
-        public string? Position { get; set; }
-        public string? Department { get; set; }
-        public string VendorContactEmail { get; set; }
-        public string VendorContactPhoneNumber { get; set; }
 
         [JsonIgnore]
-        public string UpdatedUserName { get; set; } = "a";
+        public string UpdatedUserName { get; set; } 
     }
     
     public class CreateVendorResponse
@@ -59,19 +54,6 @@ namespace Application.Vendors.Command
                 };
 
                 _dbContext.Vendor.Add(vendorData);
-                await _dbContext.SaveChangesAsync(cancellationToken);
-
-                var vendorContactData = new VendorContact
-                {
-                    VendorId = vendorData.VendorId, 
-                    Name = request.VendorContactName,
-                    Position = request.Position,
-                    Department = request.Department,
-                    Email = request.VendorContactEmail,
-                    PhoneNumber = request.VendorContactPhoneNumber
-                };
-
-                _dbContext.VendorContact.Add(vendorContactData);
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
                 return new CreateVendorResponse { VendorId = vendorData.VendorId };

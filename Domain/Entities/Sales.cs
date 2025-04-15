@@ -6,14 +6,17 @@ namespace Domain.Entities
     {
         public int SalesId { get; set; }
         public int ProductId { get; set; }
-        public int CustomerId { get; set; }
         public DateTimeOffset PaymentDate { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public string TranscationId { get; set; }
-        public PaymentStatus PaymentStatus { get; set; }
+        public OrderType PaymentStatus { get; set; }
         public int Quantity { get; set; }
 
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public CustomerType CustomerType { get; set; }
+
         public virtual ICollection<SaleProduct> SaleProducts { get; set; }
-        public virtual Customer Customer { get; set; }
     }
 }

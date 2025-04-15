@@ -48,39 +48,6 @@ namespace Application.Vendors.Command
                 .IsInEnum()
                 .WithMessage("Invalid vendor status");
 
-            // Vendor contact information validation
-            RuleFor(x => x.VendorContactName)
-                .NotEmpty()
-                .WithMessage("Contact name is required")
-                .MaximumLength(100)
-                .WithMessage("Contact name cannot exceed 100 characters");
-
-            RuleFor(x => x.Position)
-                .MaximumLength(100)
-                .WithMessage("Position cannot exceed 100 characters")
-                .When(x => !string.IsNullOrEmpty(x.Position));
-
-            RuleFor(x => x.Department)
-                .MaximumLength(100)
-                .WithMessage("Department cannot exceed 100 characters")
-                .When(x => !string.IsNullOrEmpty(x.Department));
-
-            RuleFor(x => x.VendorContactEmail)
-                .NotEmpty()
-                .WithMessage("Contact email is required")
-                .EmailAddress()
-                .WithMessage("Invalid contact email format")
-                .MaximumLength(100)
-                .WithMessage("Contact email cannot exceed 100 characters");
-
-            RuleFor(x => x.VendorContactPhoneNumber)
-                .NotEmpty()
-                .WithMessage("Contact phone number is required")
-                .Matches(@"^\+?[0-9\-\(\)\/\s]*$")
-                .WithMessage("Invalid contact phone number format")
-                .MaximumLength(14)
-                .WithMessage("Contact phone number cannot exceed 14 characters");
-
             // Updated username validation
             RuleFor(x => x.UpdatedUserName)
                 .NotEmpty()

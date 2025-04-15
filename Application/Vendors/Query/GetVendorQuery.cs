@@ -18,11 +18,6 @@ namespace Application.Vendors.Query
         public string VendorAddress { get; set; }
         public VendorType VendorType { get; set; }
         public VendorStatus VendorStatus { get; set; }
-        public string VendorContactName { get; set; }
-        public string? Position { get; set; }
-        public string? Department { get; set; }
-        public string VendorContactEmail { get; set; }
-        public string VendorContactPhoneNumber { get; set; }
     }
 
     public class GetVendorHandler : IRequestHandler<GetVendorQuery, GetVendorResponse>
@@ -42,7 +37,6 @@ namespace Application.Vendors.Query
             try
             {
                 var vendorData = await _dbContext.Vendor
-                     .Include(v => v.VendorContact)
                      .FirstOrDefaultAsync(v => v.VendorId == request.VendorId, cancellationToken) ??
                      throw new Exception($"Vendor with ID {request.VendorId} not found!");
 
@@ -53,12 +47,7 @@ namespace Application.Vendors.Query
                     VendorPhoneNumber = vendorData.PhoneNumber,
                     VendorAddress = vendorData.Address,
                     VendorType = vendorData.VendorType,
-                    VendorStatus = vendorData.VendorStatus,
-                    VendorContactName = vendorData.VendorContact?.Name ?? string.Empty,
-                    Position = vendorData.VendorContact?.Position,
-                    Department = vendorData.VendorContact?.Department,
-                    VendorContactEmail = vendorData.VendorContact?.Email ?? string.Empty,
-                    VendorContactPhoneNumber = vendorData.VendorContact?.PhoneNumber ?? string.Empty
+                    VendorStatus = vendorData.VendorStatus
                 };
             }
             catch (Exception ex)

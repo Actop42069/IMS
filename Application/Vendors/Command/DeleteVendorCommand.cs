@@ -8,7 +8,7 @@ namespace Application.Vendors.Command
     {
         public int VendorId { get; set; }
         [JsonIgnore]
-        public string LastUpdatedUser { get; set; } = "a";
+        public string LastUpdatedUser { get; set; } 
     }
 
     public class DeleteVendorResponse

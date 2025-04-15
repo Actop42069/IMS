@@ -11,12 +11,11 @@ namespace Application.Sale.Command
     public class CreateSalesCommand : IRequest<CreateSalesResponse>
     {
         public int ProductId { get; set; }
-        public int CustomerId { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
-        public PaymentStatus PaymentStatus { get; set; }
+        public OrderType PaymentStatus { get; set; }
         public int Quantity { get; set; }
         [JsonIgnore]
-        public string LastUpdatedBy { get; set; } = "a";
+        public string LastUpdatedBy { get; set; } 
     }
 
     public class CreateSalesResponse
@@ -52,7 +51,6 @@ namespace Application.Sale.Command
                 var salesData = new Sales
                 {
                     ProductId = request.ProductId,
-                    CustomerId = request.CustomerId,
                     PaymentDate = DateTimeOffset.UtcNow,
                     PaymentMethod = request.PaymentMethod,
                     TranscationId = transactionData,

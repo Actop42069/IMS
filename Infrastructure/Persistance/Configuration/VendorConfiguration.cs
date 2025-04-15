@@ -30,11 +30,6 @@ namespace Infrastructure.Persistence.Configuration
                 .IsRequired();
             builder.HasIndex(a => a.PhoneNumber)
                 .IsUnique();
-
-            builder.HasOne(v => v.VendorContact)
-                .WithOne(vc => vc.Vendor)
-                .HasForeignKey<VendorContact>(vc => vc.VendorId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

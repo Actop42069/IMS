@@ -22,7 +22,7 @@ namespace Application.Products.Command
         public IFormFile? Image { get; set; }
 
         [JsonIgnore]
-        public string LastUpdatedBy { get; set; } = "a";
+        public string LastUpdatedBy { get; set; }
     }
 
     public class CreateProductResponse

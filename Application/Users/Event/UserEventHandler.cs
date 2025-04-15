@@ -74,7 +74,7 @@ namespace Application.Users.Event
         {
             var token = await _identityService.GenerateEmailConfirmationTokenAsync(dbUser);
             var confirmationLink = $"{dbUser.ClientUrl}/accounts/activate?firstname={dbUser.FirstName}&lastname={dbUser.LastName}&email={dbUser.Email}&token={token}";
-            string emailIMS = await FileHelper.ReadEmailIMSAsync(EmailConfiguration.ACCOUNT_CONFIRMATION, cancellationToken);
+            string emailIMS = await FileHelper.ReadEmailTemplateAsync(EmailConfiguration.ACCOUNT_CONFIRMATION, cancellationToken);
             var companyLogo = CompanyLogoPath();
 
             emailIMS = emailIMS.Replace("{{company_logo}}", companyLogo)
@@ -103,7 +103,7 @@ namespace Application.Users.Event
             var resetLink = $"{dbUser.ClientUrl}/accounts/reset-password?firstname={dbUser.FirstName}&lastname={dbUser.LastName}&email={dbUser.Email}&token={token}";
             var companyLogo = CompanyLogoPath();
 
-            string emailIMS = await FileHelper.ReadEmailIMSAsync(EmailConfiguration.RESET_PASSWORD_REQUEST, cancellationToken);
+            string emailIMS = await FileHelper.ReadEmailTemplateAsync(EmailConfiguration.RESET_PASSWORD_REQUEST, cancellationToken);
 
             emailIMS = emailIMS.Replace("{{company_logo}}", companyLogo)
                                        .Replace("{{user_name}}", $"{dbUser.FirstName} {dbUser.LastName}")
@@ -132,7 +132,7 @@ namespace Application.Users.Event
             var loginLink = $"{dbUser.ClientUrl}";
             var companyLogo = CompanyLogoPath();
 
-            string emailIMS = await FileHelper.ReadEmailIMSAsync(EmailConfiguration.PASSWORD_RESET, cancellationToken);
+            string emailIMS = await FileHelper.ReadEmailTemplateAsync(EmailConfiguration.PASSWORD_RESET, cancellationToken);
 
             emailIMS = emailIMS.Replace("{{company_logo}}", companyLogo)
                                        .Replace("{{user_name}}", $"{dbUser.FirstName} {dbUser.LastName}")
@@ -160,7 +160,7 @@ namespace Application.Users.Event
             var loginLink = $"{dbUser.ClientUrl}";
             var companyLogo = CompanyLogoPath();
 
-            string emailIMS = await FileHelper.ReadEmailIMSAsync(EmailConfiguration.ACCOUNT_ACTIVATED, cancellationToken);
+            string emailIMS = await FileHelper.ReadEmailTemplateAsync(EmailConfiguration.ACCOUNT_ACTIVATED, cancellationToken);
 
             emailIMS = emailIMS.Replace("{{company_logo}}", companyLogo)
                                        .Replace("{{user_name}}", $"{dbUser.FirstName} {dbUser.LastName}")
@@ -186,7 +186,7 @@ namespace Application.Users.Event
         private async Task NotifyMfaTokenToEmailAsync(User dbUser, CancellationToken cancellationToken)
         {
             var companyLogo = CompanyLogoPath();
-            string emailIMS = await FileHelper.ReadEmailIMSAsync(EmailConfiguration.OTP_CODE, cancellationToken);
+            string emailIMS = await FileHelper.ReadEmailTemplateAsync(EmailConfiguration.OTP_CODE, cancellationToken);
 
             emailIMS = emailIMS.Replace("{{company_logo}}", companyLogo)
                                        .Replace("{{user_name}}", $"{dbUser.FirstName} {dbUser.LastName}")

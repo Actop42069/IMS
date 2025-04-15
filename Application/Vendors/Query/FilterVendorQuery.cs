@@ -18,7 +18,6 @@ namespace Application.Vendors.Query
         public string VendorAddress { get; set; }
         public VendorType VendorType { get; set; }
         public VendorStatus VendorStatus { get; set; }
-        public string VendorContactName { get; set; }
         public DateTimeOffset LastUpdatedAt { get; set; }
         public string LastUpdatedBy { get; set; }
     }
@@ -41,16 +40,13 @@ namespace Application.Vendors.Query
             {
                 var searchText = query.SearchText?.Trim().ToLower() ?? string.Empty;
                 var vendors = await _dbContext.Vendor
-                    .Include(v => v.VendorContact)
                     .Where(v => string.IsNullOrEmpty(searchText) ||
                                (v.VendorName != null &&
                                 v.VendorName.ToLower().Contains(searchText)) ||
                                (v.Email != null &&
                                 v.Email.ToLower().Contains(searchText)) ||
                                (v.PhoneNumber != null &&
-                                v.PhoneNumber.ToLower().Contains(searchText)) ||
-                               (v.VendorContact.Name != null &&
-                                v.VendorContact.Name.ToLower().Contains(searchText)))
+                                v.PhoneNumber.ToLower().Contains(searchText)))
                     .AsNoTracking()
                     .Select(v => new FilterVendorResponse
                     {
@@ -60,7 +56,6 @@ namespace Application.Vendors.Query
                         VendorAddress = v.Address,
                         VendorType = v.VendorType,
                         VendorStatus = v.VendorStatus,
-                        VendorContactName = v.VendorContact.Name,
                         LastUpdatedAt = v.LastUpdatedAt,
                         LastUpdatedBy = v.LastUpdatedBy
                     })

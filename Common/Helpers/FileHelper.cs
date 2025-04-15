@@ -6,10 +6,10 @@ namespace Common.Helpers
     {
         private static readonly string _rootPath = GetProjectRootPath();
 
-        public static async Task<string> ReadEmailIMSAsync(string imsName, CancellationToken cancellationToken)
+        public static async Task<string> ReadEmailTemplateAsync(string templateName, CancellationToken cancellationToken)
         {
             //Your ims file should be in the debug\release folder. 
-            string filePath = Path.Combine(_rootPath, $"EmailIMSs\\{imsName}");
+            string filePath = Path.Combine(_rootPath, $"EmailIMSs\\{templateName}");
             if (!File.Exists(filePath)) throw new FileNotFoundException();
 
             string html = string.Empty;

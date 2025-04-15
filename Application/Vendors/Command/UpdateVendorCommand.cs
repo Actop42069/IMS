@@ -15,14 +15,9 @@ namespace Application.Vendors.Command
         public string VendorAddress { get; set; }
         public VendorType VendorType { get; set; }
         public VendorStatus VendorStatus { get; set; }
-        public string VendorContactName { get; set; }
-        public string? Position { get; set; }
-        public string? Department { get; set; }
-        public string VendorContactEmail { get; set; }
-        public string VendorContactPhoneNumber { get; set; }
 
         [JsonIgnore]
-        public string UpdatedUserName { get; set; } = "a";
+        public string UpdatedUserName { get; set; } 
     }
 
     public class UpdateVendorResponse
@@ -46,7 +41,7 @@ namespace Application.Vendors.Command
         {
             try
             {
-                var vendorData = await _dbContext.Vendor.Include(a => a.VendorContact)
+                var vendorData = await _dbContext.Vendor
                                                             .Where(a => a.VendorId == request.VendorId)
                                                             .FirstOrDefaultAsync(cancellationToken) ??
                                                             throw new Exception("Vendor not found !");
@@ -59,13 +54,6 @@ namespace Application.Vendors.Command
                 vendorData.VendorStatus = request.VendorStatus;
                 vendorData.LastUpdatedAt = DateTimeOffset.UtcNow;
                 vendorData.LastUpdatedBy = request.UpdatedUserName;
-
-                // VendorContact Entities Update
-                vendorData.VendorContact.Name = request.VendorContactName;
-                vendorData.VendorContact.Position = request.Position;
-                vendorData.VendorContact.Department = request.Department;
-                vendorData.VendorContact.Email = request.VendorContactEmail;
-                vendorData.VendorContact.PhoneNumber = request.VendorContactPhoneNumber;
 
                 await _dbContext.SaveChangesAsync(cancellationToken);
 

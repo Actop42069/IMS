@@ -32,11 +32,7 @@ namespace Application.Vendors.Query
         public string VendorAddress { get; set; }
         public VendorType VendorType { get; set; }
         public VendorStatus VendorStatus { get; set; }
-        public string VendorContactName { get; set; }
-        public string Position { get; set; }
-        public string Department { get; set; }
-        public string VendorContactEmail { get; set; }
-        public string VendorContactPhoneNumber { get; set; }
+
     }
 
     public class ListVendorHandler : IRequestHandler<ListVendorQuery, ListVendorResponse>
@@ -56,7 +52,6 @@ namespace Application.Vendors.Query
             var totalRecords = await _dbContext.Vendor.CountAsync(cancellationToken);
 
             var vendors = await _dbContext.Vendor
-                .Include(v => v.VendorContact)
                 .AsNoTracking()
                 .OrderBy(v => v.VendorId)
                 .Skip(skip)
@@ -69,12 +64,7 @@ namespace Application.Vendors.Query
                     VendorPhoneNumber = v.PhoneNumber,
                     VendorAddress = v.Address,
                     VendorType = v.VendorType,
-                    VendorStatus = v.VendorStatus,
-                    VendorContactName = v.VendorContact.Name,
-                    Position = v.VendorContact.Position,
-                    Department = v.VendorContact.Department,
-                    VendorContactEmail = v.VendorContact.Email,
-                    VendorContactPhoneNumber = v.VendorContact.PhoneNumber
+                    VendorStatus = v.VendorStatus
                 })
                 .ToListAsync(cancellationToken);
 

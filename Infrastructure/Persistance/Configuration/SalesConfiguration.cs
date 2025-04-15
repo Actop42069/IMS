@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,10 +21,6 @@ namespace Infrastructure.Persistance.Configuration
                 .HasMaxLength(100)
                 .IsRequired();
 
-            builder.HasOne(s => s.Customer)
-                .WithMany(c => c.Sales)
-                .HasForeignKey(s => s.CustomerId)
-                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasIndex(s => s.PaymentDate)
                 .HasDatabaseName("IX_Sales_PaymentDate");

@@ -4,6 +4,7 @@ using Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(IMSDbContext))]
-    partial class IMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250414063845_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,6 +114,42 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Customer");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CustomerDocument", b =>
+                {
+                    b.Property<long>("CustomerDocumentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CustomerDocumentId"));
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Document")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DocumentUrl")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset>("LastUpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("LastUpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CustomerDocumentId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CustomerDocument");
                 });
 
             modelBuilder.Entity("Domain.Entities.ErrorLog", b =>
@@ -645,6 +684,17 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.CustomerDocument", b =>
+                {
+                    b.HasOne("Domain.Entities.Customer", "Customer")
+                        .WithMany("CustomerDocument")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
                     b.HasOne("Domain.Entities.Category", "Category")
@@ -762,6 +812,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Customer", b =>
                 {
+                    b.Navigation("CustomerDocument");
+
                     b.Navigation("Sales");
                 });
 

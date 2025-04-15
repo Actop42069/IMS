@@ -78,8 +78,7 @@ namespace Application.Sale.Query
                 var salesData = await _dbContext.Sales
                     .AsNoTracking()
                     .Where(s => s.PaymentDate >= dateRange.startDate &&
-                               s.PaymentDate <= dateRange.endDate &&
-                               s.PaymentStatus == PaymentStatus.Completed)
+                               s.PaymentDate <= dateRange.endDate)
                     .Join(
                         _dbContext.SaleProduct,
                         sale => sale.SalesId,

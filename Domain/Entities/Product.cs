@@ -1,5 +1,4 @@
 ﻿using Domain.Enumeration;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Domain.Entities
 {
